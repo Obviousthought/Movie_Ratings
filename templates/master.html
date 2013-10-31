@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>Shawnee & Jennie's Movie Ratings</title>
+        <link href="/static/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/css/main.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id = "navigation">
+
+            <a href="/display_users">List of Users |</a>
+            <a href="/movies">List of Movies</a>
+
+        </div>
+        <div class="container">
+            {% if profile_link%}
+                <h2>Hello User: {{user_id}}</h2>
+                <br>
+                <h2>{{email}}</h2>
+            {% else %}
+                <h2>Do you have an account?</h2>
+                <br>
+                <h3>No? Sign In: </h3>
+                <a href="/">Here!</a>
+            {% endif %}
+
+            {% block body %}
+
+            {% endblock %}
+        </div>
+
+        <div id="footerbar">
+
+            {% if profile_link%}
+            <a href="/profile/{{profile_link}}">My Profile |</a>
+            <a href="/clear">Sign out </a>
+            {% else %}
+                <a href="/">Sign in </a>
+            {% endif %}
+
+        </div>
+    </body>
+</html>

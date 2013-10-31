@@ -6,7 +6,7 @@ def load_user(session):
     with open('seed_data/u.user', 'rb') as csvfile:
         user_db = csv.reader(csvfile, delimiter = '|')
         for row in user_db:
-            new_user = model.User(id=row[0], age=row[1], gender=row[2], occupation=row[3], zipcode=row[4])
+            new_user = model.User(id=row[0], age=row[1], zipcode=row[4])
             session.add(new_user)
     session.commit()
     
@@ -25,7 +25,7 @@ def load_item(session):
 
             else:
                 pass
-            new_movie = model.Item(id=row[0], name=title, released_at=formatted_date , imdb_url=row[4])
+            new_movie = model.Movie(id=row[0], name=title, released_at=formatted_date , imdb_url=row[4])
             session.add(new_movie)
     session.commit()
     
@@ -37,13 +37,14 @@ def load_data(session):
         for row in data_db:
             timestamp = int(row[3])
             formatted_timestamp = datetime.datetime.utcfromtimestamp(timestamp)
-            new_data= model.Data(user_id=row[0], movie_id=row[1], rating=row[2], timestamp=formatted_timestamp)
+            new_data= model.Rating(user_id=row[0], movie_id=row[1], rating=row[2], timestamp=formatted_timestamp)
             session.add(new_data)
     session.commit()
     
 
-def main(session):
+def main():
     # You'll call each of the load_* functions with the session as an argument
+    session = model.connect()
     load_user(session)
     print "user loaded"
     load_item(session)
